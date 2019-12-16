@@ -1,5 +1,5 @@
 CC=g++
-CPPFLAGS=-ansi -pedantic -Wall -std=c++11
+CPPFLAGS=-ansi -pedantic -Wall -std=c++11 -lstd
 #DEFINEMAP= -DMAP
 MAIN=MenuCatalogue
 SRCS=TrajetComp.cpp TrajetSimple.cpp MenuCatalogue.cpp Catalogue.cpp File.cpp

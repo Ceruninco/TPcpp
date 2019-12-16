@@ -18,6 +18,8 @@ sera alors affiché sur l'interface utilisateur
 
 //--------------------------------------------------- Interfaces utilisées
 #include "TrajetSimple.h"
+#include <string>
+
 
 //------------------------------------------------------------- Constantes
 
@@ -74,6 +76,9 @@ public:
 	int estPresent(char* element, char** tableau, int taille)const;
 	// renvoie 1 si la chaîne de caractère "element" est présente dans le tableau de chaînes de caractères "tableau" de taille "taille"
 	// renvoie 0 sinon
+
+	void enregistrer();
+	// Ecrit dans un fichier texte la version modifiée pour le stockage du catalogue 
 
 
 	int Dijsktra(char* depart, char* arrivee)const;

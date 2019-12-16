@@ -6,15 +6,22 @@
 //---------------------------------------------------------------- INCLUDE
 
 //-------------------------------------------------------- Include système
-using namespace std;
+
 #include <stdlib.h>
 #include <cstring>
+#include <string>
 #include <iostream>
+#include <fstream>
+#include <iterator>
+
+using namespace std;
 
 //------------------------------------------------------ Include personnel
 #include "TrajetComp.h"
 #include "Catalogue.h"
 #include "File.h"
+
+
 //#define MAP
 
 //------------------------------------------------------------- Constantes
@@ -45,6 +52,31 @@ void Catalogue::ajoutListe(TrajetSimple& leTrajet) {
 	}
   finCatalogue = nouveauTrajet;
 	tailleCatalogue++;
+}
+  
+void Catalogue::enregistrer()
+{
+    #ifdef MAP
+      cout << "Appel a la méthode <enregistrer> de <Catalogue>" << endl;
+  #endif
+    cout<<endl;
+    int i=1;
+    entreeCatalogue* lecture=debutCatalogue;
+    string entete= {"%"};
+    while(lecture!=NULL)
+    {
+      cout << i << ". ";
+    
+      string nb= {static_cast<char>(i)};
+      string aStocker = {lecture->trajet->description_save()};
+      string aEnvoyer = {entete+nb+';'+aStocker+entete};
+
+      cout << endl;
+      lecture=lecture->suivant;
+      i++;
+    }
+    cout<<endl;
+
 }
 
 void Catalogue::afficherTrajets()const
