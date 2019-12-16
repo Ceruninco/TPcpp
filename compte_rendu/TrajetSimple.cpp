@@ -12,7 +12,7 @@
 using namespace std;
 #include <iostream>
 #include <cstring>
-
+#include <string>
 //------------------------------------------------------ Include personnel
 #include "TrajetSimple.h"
 //#define MAP
@@ -22,7 +22,11 @@ using namespace std;
 //----------------------------------------------------------------- PUBLIC
 
 //----------------------------------------------------- Méthodes publiques
-
+string TrajetSimple::description_save(){
+ string description;
+    description="A;1;"+string(villeDepart)+";"+string(villeArrivee)+";"+string(moyenTransport)+";";
+    return description;
+}
 void TrajetSimple::afficher()const
 {
   #ifdef MAP

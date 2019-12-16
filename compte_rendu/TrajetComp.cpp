@@ -21,7 +21,24 @@ using namespace std;
 //----------------------------------------------------------------- PUBLIC
 
 //----------------------------------------------------- Méthodes publiques
+string TrajetComp::description_save(){
+ string description;
 
+    stringstream s;
+    s << tailleTrajet();
+    string s1;
+    s >> s1;
+    description="B;"+s1+";"+string(villeDepart)+";"+string(villeArrivee)+";"+string(moyenTransport)+";";
+
+    TrajetComp * lecture = suivant;
+    while(lecture!=nullptr)
+    {
+      description+= string(villeDepart)+";"+string(villeArrivee)+";"+string(moyenTransport)+";";
+      lecture=lecture->suivant;
+    }
+    return description;
+
+}
  void TrajetComp::afficher()const
 {
   #ifdef MAP

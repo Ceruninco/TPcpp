@@ -32,6 +32,8 @@ class TrajetComp : public TrajetSimple
 
 public:
 //----------------------------------------------------- Méthodes publiques
+virtual string description_save();
+
 void afficher()const;
 // Appelée par la méthode afficherTrajets de catalogue suite au menu avec l'entrée 3
 //
