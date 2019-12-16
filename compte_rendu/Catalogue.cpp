@@ -62,6 +62,8 @@ void Catalogue::enregistrer()
     cout<<endl;
     int i=1;
     entreeCatalogue* lecture=debutCatalogue;
+    ifstream fichier("BDtrajet.txt");
+    istream_iterator<string> it(fichier);
     string entete= {"%"};
     while(lecture!=NULL)
     {
@@ -70,8 +72,7 @@ void Catalogue::enregistrer()
       string nb= {static_cast<char>(i)};
       string aStocker = {lecture->trajet->description_save()};
       string aEnvoyer = {entete+nb+';'+aStocker+entete};
-
-      cout << endl;
+      *it = aEnvoyer;
       lecture=lecture->suivant;
       i++;
     }
