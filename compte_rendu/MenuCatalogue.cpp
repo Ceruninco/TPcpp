@@ -1,3 +1,5 @@
+
+//coucou mec
 #include <iostream>
 #include <cstring>
 #include "TrajetComp.h"
