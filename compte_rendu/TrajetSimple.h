@@ -11,6 +11,9 @@ On peut afficher ces informations et rechercher des correspondances avec des vil
 #if ! defined ( TrajetSimple_H )
 #define TrajetSimple_H
 #include <cstring>
+#include <string>
+#include <sstream>
+using namespace std;
 //--------------------------------------------------- Interfaces utilisées
 
 //------------------------------------------------------------- Constantes
@@ -30,6 +33,7 @@ class TrajetSimple
 
 public:
 //----------------------------------------------------- Méthodes publiques
+virtual string description_save();
 virtual void afficher()const;
 // Appelée par la méthode afficherTrajets de catalogue suite au menu avec l'entrée 3
 //
@@ -68,7 +72,7 @@ TrajetSimple ( const TrajetSimple & unTrajetSimple );
 
 TrajetSimple (char * vilDep, char *  vilArr, char *  moyenT);
 // Appelé au menu par l'entrée 1 pour ajouter un trajet simple au catalogue
-// 
+//
 // Associe respectivement vilDep,vilArr et moyenT aux attributs villeDepart, villeArrivee et moyenTransport de TrajetSimple
 //
 
