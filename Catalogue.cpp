@@ -88,13 +88,15 @@ void Catalogue::load_saved(){
 
   insererTrajet(*listeTrajetsComp[0]);
   delete[] listeTrajetsComp;
+
       }
       for(unsigned int j= 0; j<result2[i].size();j++){
         cout << result2[i][j] << "+";
       }
+
       cout << '\n' << endl;
     }
-
+  delete[] result2;
 }
 
 void Catalogue::insererTrajet(TrajetSimple& trajet){
