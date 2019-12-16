@@ -64,10 +64,30 @@ void Catalogue::load_saved(){
   }
     for(unsigned int i =0; i< result.size(); i++){
       cout << "trajet numero " << i << endl;
-      if(result2[i][0]==){
+      if(result2[i][1]=="A"){
+        TrajetSimple* t=new TrajetSimple(const_cast<char *>(result2[i][3].c_str()),const_cast<char *>(result2[i][4].c_str()), const_cast<char *>(result2[i][5].c_str()));
 
-      }else if(result2[i][0]){
+        insererTrajet(*t);
+      }else if(result2[i][1]=="B"){
+        TrajetComp* *listeTrajetsComp=new TrajetComp*[atoi(const_cast<char *>(result2[i][2].c_str()))];
+        TrajetComp* t;
+        t=new TrajetComp(const_cast<char *>(result2[i][3].c_str()), const_cast<char *>(result2[i][4].c_str()), const_cast<char *>(result2[i][5].c_str()), nullptr);
+        listeTrajetsComp[0]=t;
 
+  for(int c=1;c<atoi(result2[i][2].c_str());c++)
+  {
+    t=new TrajetComp(const_cast<char *>(result2[i][3+3*c].c_str()), const_cast<char *>(result2[i][4+3*c].c_str()), const_cast<char *>(result2[i][5+3*c].c_str()), nullptr);
+    listeTrajetsComp[c]=t;
+  }
+
+  for(int c=0;c<atoi(const_cast<char *>(result2[i][2].c_str()))-1;c++)
+  {
+    listeTrajetsComp[c]->setSuivant(listeTrajetsComp[c+1]);
+  }
+  listeTrajetsComp[atoi(const_cast<char *>(result2[i][2].c_str()))-1]->setSuivant(nullptr);
+
+  insererTrajet(*listeTrajetsComp[0]);
+  delete[] listeTrajetsComp;
       }
       for(unsigned int j= 0; j<result2[i].size();j++){
         cout << result2[i][j] << "+";
