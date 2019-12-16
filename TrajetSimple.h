@@ -35,9 +35,7 @@ public:
 //----------------------------------------------------- Méthodes publiques
 virtual string description_save();
 
-virtual string afficher_save()const;
-
-
+virtual string afficher_save();
 virtual void afficher()const;
 // Appelée par la méthode afficherTrajets de catalogue suite au menu avec l'entrée 3
 //

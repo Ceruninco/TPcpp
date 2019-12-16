@@ -18,6 +18,8 @@ sera alors affiché sur l'interface utilisateur
 
 //--------------------------------------------------- Interfaces utilisées
 #include "TrajetSimple.h"
+#include <string>
+
 
 //------------------------------------------------------------- Constantes
 
@@ -35,7 +37,6 @@ class Catalogue
 
 public:
 	//----------------------------------------------------- Méthodes publiques
-
 	void insererTrajet(TrajetSimple& trajet);
 	//  Appelée à chaque ajout de trajet ( cf insertionSimple et insertionCompose)
 	//
@@ -76,6 +77,9 @@ public:
 	// renvoie 1 si la chaîne de caractère "element" est présente dans le tableau de chaînes de caractères "tableau" de taille "taille"
 	// renvoie 0 sinon
 
+	void enregistrer();
+	// Ecrit dans un fichier texte la version modifiée pour le stockage du catalogue
+	void load_saved();
 
 	int Dijsktra(char* depart, char* arrivee)const;
 	// version avancée de la recherche de trajet

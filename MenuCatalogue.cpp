@@ -19,6 +19,8 @@ int main(void)
     cout<<"3 pour afficher les trajets"<<endl;
     cout<<"4 pour rechercher un trajet"<<endl;
     cout<<"5 pour faire une recherche avancée d'un trajet"<<endl;
+      cout<<"6 pour sauvegarder"<<endl;
+      cout<<"7 pour load la DB"<<endl;
     cout<<"0 pour quitter"<<endl;
     scanf("%d", &requete);
 
@@ -71,6 +73,16 @@ int main(void)
         delete [] villeA;
       }
       break;
+      case 6 :
+      {
+        monCatalogue.enregistrer();
+      }
+      break;
+      case 7 :
+        {
+          monCatalogue.load_saved();
+        }
+        break;
     }
   }while(requete!=0);
   return 0;

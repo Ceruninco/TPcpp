@@ -6,15 +6,25 @@
 //---------------------------------------------------------------- INCLUDE
 
 //-------------------------------------------------------- Include système
-using namespace std;
+
 #include <stdlib.h>
 #include <cstring>
+#include <string>
 #include <iostream>
+#include <fstream>
+#include <iterator>
+#include <sstream>
+#include <algorithm>
+#include <vector>
+
+using namespace std;
 
 //------------------------------------------------------ Include personnel
 #include "TrajetComp.h"
 #include "Catalogue.h"
 #include "File.h"
+
+
 //#define MAP
 
 //------------------------------------------------------------- Constantes
@@ -22,6 +32,50 @@ using namespace std;
 //----------------------------------------------------------------- PUBLIC
 
 //----------------------------------------------------- Méthodes publiques
+void Catalogue::load_saved(){
+
+  ifstream fichier("BDtrajet.txt");
+      vector<string> result;
+
+      string buffer;
+      fichier >> buffer;
+      stringstream ss(buffer);
+
+
+    char delim = '%';
+    string token;
+
+    while (std::getline(ss, token, delim)) {
+        result.push_back(token);
+
+    }
+
+    vector<string>* result2 = new vector<string>[result.size()];
+  for (unsigned int i = 0; i < result.size(); i++)
+  {
+
+    stringstream ges(result[i]);
+    char delim = ';';
+    string token;
+
+    while (std::getline(ges, token, delim)) {
+        result2[i].push_back(token);
+    }
+  }
+    for(unsigned int i =0; i< result.size(); i++){
+      cout << "trajet numero " << i << endl;
+      if(result2[i][0]==){
+
+      }else if(result2[i][0]){
+
+      }
+      for(unsigned int j= 0; j<result2[i].size();j++){
+        cout << result2[i][j] << "+";
+      }
+      cout << '\n' << endl;
+    }
+
+}
 
 void Catalogue::insererTrajet(TrajetSimple& trajet){
   #ifdef MAP
@@ -45,6 +99,30 @@ void Catalogue::ajoutListe(TrajetSimple& leTrajet) {
 	}
   finCatalogue = nouveauTrajet;
 	tailleCatalogue++;
+}
+
+void Catalogue::enregistrer()
+{
+    #ifdef MAP
+      cout << "Appel a la méthode <enregistrer> de <Catalogue>" << endl;
+  #endif
+    cout<<endl;
+    int i=1;
+    entreeCatalogue* lecture=debutCatalogue;
+    ofstream fichier("BDtrajet.txt",ios::out|ios::trunc);
+
+    string entete= {"%"};
+    while(lecture!=NULL)
+    {
+
+      string nb= to_string(i);
+      string aStocker = {lecture->trajet->description_save()};
+      string aEnvoyer = {nb+';'+aStocker+entete};
+      fichier << aEnvoyer;
+      lecture=lecture->suivant;
+      i++;
+    }
+  fichier.close();
 }
 
 void Catalogue::afficherTrajets()const

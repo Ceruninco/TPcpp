@@ -24,14 +24,17 @@ using namespace std;
 //----------------------------------------------------- Méthodes publiques
 string TrajetSimple::description_save(){
  string description;
-    description="A;1;"+TrajetSimple::afficher_save();
+    description="A;1;"+string(villeDepart)+";"+string(villeArrivee)+";"+string(moyenTransport)+";";
     return description;
 }
+
 string TrajetSimple::afficher_save(){
   string description;
      description=string(villeDepart)+";"+string(villeArrivee)+";"+string(moyenTransport)+";";
      return description;
 }
+
+
 void TrajetSimple::afficher()const
 {
   #ifdef MAP
