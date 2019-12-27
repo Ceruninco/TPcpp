@@ -12,6 +12,7 @@ Catalogue monCatalogue;
 int main(void)
 {
   int requete;
+  int sousrequete;
   do
   {
     cout<<"1 pour ajouter un trajet simple"<<endl;
@@ -80,7 +81,42 @@ int main(void)
       break;
       case 7 :
         {
-          monCatalogue.load_saved();
+          cout<<"        1 pour charger tout"<<endl;
+          cout<<"        2 pour charger uniquement les trajet simples"<<endl;
+          cout<<"        3 pour charger uniquement les trajet composés"<<endl;
+          cout<<"        4 pour charger les trajets en fonction de villes particulières"<<endl;
+          cout<<"        5 pour charger un intervalle de trajets "<<endl;
+          scanf("%d", &sousrequete);
+          switch(sousrequete)
+          {
+            case 1:
+            {
+              monCatalogue.load_savedAll();
+            }
+            break;
+            case 2:
+            {
+              monCatalogue.load_savedSimple();
+            }
+            break;
+            case 3:
+            {
+              monCatalogue.load_savedComp();
+            }
+            break;
+            case 4:
+            {
+              monCatalogue.load_savedDepArr();
+            }
+            break;
+            case 5:
+            {
+              monCatalogue.load_savedSelec();
+            }
+            break;
+
+          }
+
         }
         break;
     }

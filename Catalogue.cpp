@@ -32,7 +32,7 @@ using namespace std;
 //----------------------------------------------------------------- PUBLIC
 
 //----------------------------------------------------- Méthodes publiques
-void Catalogue::load_saved(){
+void Catalogue::load_savedAll(){
 
   ifstream fichier("BDtrajet.txt");
       vector<string> result;
@@ -63,6 +63,359 @@ void Catalogue::load_saved(){
     }
   }
     for(unsigned int i =0; i< result.size(); i++){
+      cout << "trajet numero " << i << endl;
+      if(result2[i][1]=="A"){
+        TrajetSimple* t=new TrajetSimple(const_cast<char *>(result2[i][3].c_str()),const_cast<char *>(result2[i][4].c_str()), const_cast<char *>(result2[i][5].c_str()));
+
+        insererTrajet(*t);
+      }else if(result2[i][1]=="B"){
+        TrajetComp* *listeTrajetsComp=new TrajetComp*[atoi(const_cast<char *>(result2[i][2].c_str()))];
+        TrajetComp* t;
+        t=new TrajetComp(const_cast<char *>(result2[i][3].c_str()), const_cast<char *>(result2[i][4].c_str()), const_cast<char *>(result2[i][5].c_str()), nullptr);
+        listeTrajetsComp[0]=t;
+
+  for(int c=1;c<atoi(result2[i][2].c_str());c++)
+  {
+    t=new TrajetComp(const_cast<char *>(result2[i][3+3*c].c_str()), const_cast<char *>(result2[i][4+3*c].c_str()), const_cast<char *>(result2[i][5+3*c].c_str()), nullptr);
+    listeTrajetsComp[c]=t;
+  }
+
+  for(int c=0;c<atoi(const_cast<char *>(result2[i][2].c_str()))-1;c++)
+  {
+    listeTrajetsComp[c]->setSuivant(listeTrajetsComp[c+1]);
+  }
+  listeTrajetsComp[atoi(const_cast<char *>(result2[i][2].c_str()))-1]->setSuivant(nullptr);
+
+  insererTrajet(*listeTrajetsComp[0]);
+  delete[] listeTrajetsComp;
+
+      }
+      for(unsigned int j= 0; j<result2[i].size();j++){
+        cout << result2[i][j] << "+";
+      }
+
+      cout << '\n' << endl;
+    }
+  delete[] result2;
+}
+
+void Catalogue::load_savedSimple(){
+
+  ifstream fichier("BDtrajet.txt");
+      vector<string> result;
+
+      string buffer;
+      fichier >> buffer;
+      stringstream ss(buffer);
+
+
+    char delim = '%';
+    string token;
+
+    while (std::getline(ss, token, delim)) {
+        result.push_back(token);
+
+    }
+
+    vector<string>* result2 = new vector<string>[result.size()];
+  for (unsigned int i = 0; i < result.size(); i++)
+  {
+
+    stringstream ges(result[i]);
+    char delim = ';';
+    string token;
+
+    while (std::getline(ges, token, delim)) {
+        result2[i].push_back(token);
+    }
+  }
+    for(unsigned int i =0; i< result.size(); i++){
+
+      if(result2[i][1]=="A"){
+        cout << "trajet numero " << i << endl;
+        TrajetSimple* t=new TrajetSimple(const_cast<char *>(result2[i][3].c_str()),const_cast<char *>(result2[i][4].c_str()), const_cast<char *>(result2[i][5].c_str()));
+
+        insererTrajet(*t);
+      }
+
+      
+    }
+  delete[] result2;
+  cout << "Trajets Simples chargés \r\n" << endl;
+}
+void Catalogue::load_savedComp(){
+
+  ifstream fichier("BDtrajet.txt");
+      vector<string> result;
+
+      string buffer;
+      fichier >> buffer;
+      stringstream ss(buffer);
+
+
+    char delim = '%';
+    string token;
+
+    while (std::getline(ss, token, delim)) {
+        result.push_back(token);
+
+    }
+
+    vector<string>* result2 = new vector<string>[result.size()];
+  for (unsigned int i = 0; i < result.size(); i++)
+  {
+
+    stringstream ges(result[i]);
+    char delim = ';';
+    string token;
+
+    while (std::getline(ges, token, delim)) {
+        result2[i].push_back(token);
+    }
+  }
+    for(unsigned int i =0; i< result.size(); i++){
+      
+      if(result2[i][1]=="B"){
+        cout << "trajet numero " << i << endl;
+        TrajetComp* *listeTrajetsComp=new TrajetComp*[atoi(const_cast<char *>(result2[i][2].c_str()))];
+        TrajetComp* t;
+        t=new TrajetComp(const_cast<char *>(result2[i][3].c_str()), const_cast<char *>(result2[i][4].c_str()), const_cast<char *>(result2[i][5].c_str()), nullptr);
+        listeTrajetsComp[0]=t;
+
+  for(int c=1;c<atoi(result2[i][2].c_str());c++)
+  {
+    t=new TrajetComp(const_cast<char *>(result2[i][3+3*c].c_str()), const_cast<char *>(result2[i][4+3*c].c_str()), const_cast<char *>(result2[i][5+3*c].c_str()), nullptr);
+    listeTrajetsComp[c]=t;
+  }
+
+  for(int c=0;c<atoi(const_cast<char *>(result2[i][2].c_str()))-1;c++)
+  {
+    listeTrajetsComp[c]->setSuivant(listeTrajetsComp[c+1]);
+  }
+  listeTrajetsComp[atoi(const_cast<char *>(result2[i][2].c_str()))-1]->setSuivant(nullptr);
+
+  insererTrajet(*listeTrajetsComp[0]);
+  delete[] listeTrajetsComp;
+
+      }
+
+      
+    }
+  delete[] result2;
+  cout << "Trajets Composés chargés \r\n" << endl;
+}
+
+void Catalogue::load_savedDepArr()
+{
+
+  ifstream fichier("BDtrajet.txt");
+      vector<string> result;
+
+      string buffer;
+      fichier >> buffer;
+      stringstream ss(buffer);
+
+
+    char delim = '%';
+    string token;
+
+    while (std::getline(ss, token, delim)) {
+        result.push_back(token);
+
+    }
+
+    vector<string>* result2 = new vector<string>[result.size()];
+  for (unsigned int i = 0; i < result.size(); i++)
+  {
+
+    stringstream ges(result[i]);
+    char delim = ';';
+    string token;
+
+    while (std::getline(ges, token, delim)) {
+        result2[i].push_back(token);
+    }
+  }
+  int recherche;
+  cout << " Voulez vous comparer à : " << endl;
+  cout << " 1 : Une ville de départ " << endl;
+  cout << " 2 : Une ville de d'arrivée " << endl;
+  cout << " 3 : Les deux" << endl;
+  scanf("%d", &recherche);
+  switch (recherche)
+  {
+    case 1 : 
+    {
+      string villedepart;
+      cout << " Rentrez la ville de départ" << endl;
+      cin >> villedepart;
+      for(unsigned int i =0; i< result.size(); i++){
+        if (result2[i][3].compare(villedepart)==0)
+        {
+          cout << "trajet numero " << i << endl;
+          if(result2[i][1]=="A"){
+            TrajetSimple* t=new TrajetSimple(const_cast<char *>(result2[i][3].c_str()),const_cast<char *>(result2[i][4].c_str()), const_cast<char *>(result2[i][5].c_str()));
+            insererTrajet(*t);
+          }
+          else if(result2[i][1]=="B")
+          {
+            TrajetComp* *listeTrajetsComp=new TrajetComp*[atoi(const_cast<char *>(result2[i][2].c_str()))];
+            TrajetComp* t;
+            t=new TrajetComp(const_cast<char *>(result2[i][3].c_str()), const_cast<char *>(result2[i][4].c_str()), const_cast<char *>(result2[i][5].c_str()), nullptr);
+            listeTrajetsComp[0]=t;
+      
+
+            for(int c=1;c<atoi(result2[i][2].c_str());c++)
+            {
+              t=new TrajetComp(const_cast<char *>(result2[i][3+3*c].c_str()), const_cast<char *>(result2[i][4+3*c].c_str()), const_cast<char *>(result2[i][5+3*c].c_str()), nullptr);
+              listeTrajetsComp[c]=t;
+            }
+
+            for(int c=0;c<atoi(const_cast<char *>(result2[i][2].c_str()))-1;c++)
+            {
+              listeTrajetsComp[c]->setSuivant(listeTrajetsComp[c+1]);
+            }
+            listeTrajetsComp[atoi(const_cast<char *>(result2[i][2].c_str()))-1]->setSuivant(nullptr);
+
+            insererTrajet(*listeTrajetsComp[0]);
+            delete[] listeTrajetsComp;
+          }
+        }
+      }
+    }
+    break;
+
+    case 2 : 
+    {
+      string villearrivee;
+      cout << " Rentrez la ville d'arrivée" << endl;
+      cin >> villearrivee;
+      for(unsigned int i =0; i< result.size(); i++){
+        //cout<< result2[i][result2[i].size()-2] << endl;
+        if (result2[i][result2[i].size()-2].compare(villearrivee)==0)
+        {
+
+          cout << "trajet numero " << i << endl;
+          if(result2[i][1]=="A"){
+            TrajetSimple* t=new TrajetSimple(const_cast<char *>(result2[i][3].c_str()),const_cast<char *>(result2[i][4].c_str()), const_cast<char *>(result2[i][5].c_str()));
+            insererTrajet(*t);
+          }
+          else if(result2[i][1]=="B")
+          {
+            TrajetComp* *listeTrajetsComp=new TrajetComp*[atoi(const_cast<char *>(result2[i][2].c_str()))];
+            TrajetComp* t;
+            t=new TrajetComp(const_cast<char *>(result2[i][3].c_str()), const_cast<char *>(result2[i][4].c_str()), const_cast<char *>(result2[i][5].c_str()), nullptr);
+            listeTrajetsComp[0]=t;
+      
+
+            for(int c=1;c<atoi(result2[i][2].c_str());c++)
+            {
+              t=new TrajetComp(const_cast<char *>(result2[i][3+3*c].c_str()), const_cast<char *>(result2[i][4+3*c].c_str()), const_cast<char *>(result2[i][5+3*c].c_str()), nullptr);
+              listeTrajetsComp[c]=t;
+            }
+
+            for(int c=0;c<atoi(const_cast<char *>(result2[i][2].c_str()))-1;c++)
+            {
+              listeTrajetsComp[c]->setSuivant(listeTrajetsComp[c+1]);
+            }
+            listeTrajetsComp[atoi(const_cast<char *>(result2[i][2].c_str()))-1]->setSuivant(nullptr);
+
+            insererTrajet(*listeTrajetsComp[0]);
+            delete[] listeTrajetsComp;
+          }
+        }
+      }
+    }
+    break;
+
+    case 3 : 
+    {
+      string villedepart;
+      string villearrivee;
+      cout << " Rentrez la ville de départ" << endl;
+      cin >> villedepart;
+      cout << " Rentrez la ville d'arrivée" << endl;
+      cin >> villearrivee;
+      for(unsigned int i =0; i< result.size(); i++){
+        //cout<< result2[i][result2[i].size()-2] << endl;
+        if ((result2[i][result2[i].size()-2].compare(villearrivee)==0)&&(result2[i][3].compare(villedepart)==0))
+        {
+
+          cout << "trajet numero " << i << endl;
+          if(result2[i][1]=="A"){
+            TrajetSimple* t=new TrajetSimple(const_cast<char *>(result2[i][3].c_str()),const_cast<char *>(result2[i][4].c_str()), const_cast<char *>(result2[i][5].c_str()));
+            insererTrajet(*t);
+          }
+          else if(result2[i][1]=="B")
+          {
+            TrajetComp* *listeTrajetsComp=new TrajetComp*[atoi(const_cast<char *>(result2[i][2].c_str()))];
+            TrajetComp* t;
+            t=new TrajetComp(const_cast<char *>(result2[i][3].c_str()), const_cast<char *>(result2[i][4].c_str()), const_cast<char *>(result2[i][5].c_str()), nullptr);
+            listeTrajetsComp[0]=t;
+      
+
+            for(int c=1;c<atoi(result2[i][2].c_str());c++)
+            {
+              t=new TrajetComp(const_cast<char *>(result2[i][3+3*c].c_str()), const_cast<char *>(result2[i][4+3*c].c_str()), const_cast<char *>(result2[i][5+3*c].c_str()), nullptr);
+              listeTrajetsComp[c]=t;
+            }
+
+            for(int c=0;c<atoi(const_cast<char *>(result2[i][2].c_str()))-1;c++)
+            {
+              listeTrajetsComp[c]->setSuivant(listeTrajetsComp[c+1]);
+            }
+            listeTrajetsComp[atoi(const_cast<char *>(result2[i][2].c_str()))-1]->setSuivant(nullptr);
+
+            insererTrajet(*listeTrajetsComp[0]);
+            delete[] listeTrajetsComp;
+          }
+        }
+      }
+    }
+    break;
+    
+     
+  }
+  delete[] result2;
+}
+void Catalogue::load_savedSelec(){
+
+  ifstream fichier("BDtrajet.txt");
+      vector<string> result;
+
+      string buffer;
+      fichier >> buffer;
+      stringstream ss(buffer);
+
+
+    char delim = '%';
+    string token;
+
+    while (std::getline(ss, token, delim)) {
+        result.push_back(token);
+
+    }
+
+    vector<string>* result2 = new vector<string>[result.size()];
+  for (unsigned int i = 0; i < result.size(); i++)
+  {
+
+    stringstream ges(result[i]);
+    char delim = ';';
+    string token;
+
+    while (std::getline(ges, token, delim)) {
+        result2[i].push_back(token);
+    }
+  }
+  int debut=0;
+  int fin=0;
+  cout << "Noter que l'intervalle est inclusif et que l'indice part de 0"<<endl;
+  cout<< "Rentrez le début de l'intervalle" << endl;
+  scanf("%d",&debut);
+  cout<< "Rentrez la fin de l'intervalle" << endl;
+  scanf("%d",&fin);
+    for(unsigned int i =debut; i< fin+1; i++){
       cout << "trajet numero " << i << endl;
       if(result2[i][1]=="A"){
         TrajetSimple* t=new TrajetSimple(const_cast<char *>(result2[i][3].c_str()),const_cast<char *>(result2[i][4].c_str()), const_cast<char *>(result2[i][5].c_str()));

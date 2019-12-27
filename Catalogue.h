@@ -79,7 +79,17 @@ public:
 
 	void enregistrer();
 	// Ecrit dans un fichier texte la version modifiée pour le stockage du catalogue
-	void load_saved();
+	void load_savedAll();
+	// Charge le catalogue entièrement
+	void load_savedSimple();
+	void load_savedComp();
+	// Charge uniquement les trajets du type voulu dans le catalogue
+	void load_savedDepArr();
+	// Charge uniquement les trajets ayant pour ville de départ et/ou d'arrivée la ville choisie
+	void load_savedSelec();
+	// Charge uniquement les trajets d'un intervalle 
+
+
 
 	int Dijsktra(char* depart, char* arrivee)const;
 	// version avancée de la recherche de trajet
